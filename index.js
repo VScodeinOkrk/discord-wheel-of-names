@@ -12,6 +12,25 @@
  * - Multiple color themes
  */
 
+import http from 'node:http';
+
+const port = Number(process.env.PORT || 3000);
+
+const server = http.createServer((req, res) => {
+  if (req.url === '/health') {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('OK');
+    return;
+  }
+
+  res.writeHead(404);
+  res.end('Not Found');
+});
+
+server.listen(port, '0.0.0.0', () => {
+  console.log(`HTTP server listening on port ${port}`);
+});
+
 import 'dotenv/config';
 import { Client, Collection, Events, GatewayIntentBits, REST, Routes } from 'discord.js';
 import { UplupAPI } from './uplup-api.js';
